@@ -1,8 +1,8 @@
 import React from 'react';
-import FormControl from 'react-bootstrap/lib/FormControl'
+import { Input } from 'reactstrap';
 
-export default ({input, field}) => {
+export default ({ input, field }) => {
   return (
-    <FormControl type={field.type} {...input} />
+    <Input type={field.type} {...input} />
   );
 }

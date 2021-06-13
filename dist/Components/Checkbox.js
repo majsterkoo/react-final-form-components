@@ -7,15 +7,11 @@ var _react = _interopRequireDefault(require("react"));
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
-var _Col = _interopRequireDefault(require("react-bootstrap/lib/Col"));
-
-var _Row = _interopRequireDefault(require("react-bootstrap/lib/Row"));
-
-var _Alert = _interopRequireDefault(require("react-bootstrap/lib/Alert"));
-
 var _Checkbox = _interopRequireDefault(require("react-bootstrap/lib/Checkbox"));
 
 var _FormControl = _interopRequireDefault(require("react-bootstrap/lib/FormControl"));
+
+var _reactstrap = require("reactstrap");
 
 var _isFunction2 = _interopRequireDefault(require("lodash/isFunction"));
 
@@ -158,7 +154,7 @@ function (_React$Component) {
     var field = (0, _get2.default)(this.props, 'field');
 
     if (filtered.length === 0) {
-      return _react.default.createElement(_Alert.default, null, (0, _get2.default)(this.props.field, 'filter_norecords', 'No results'));
+      return _react.default.createElement(_reactstrap.Alert, null, (0, _get2.default)(this.props.field, 'filter_norecords', 'No results'));
     }
 
     if (field.chunks) {
@@ -167,14 +163,14 @@ function (_React$Component) {
       var chunks = function chunks() {
         var chunkData = (0, _chunk2.default)(filtered, split);
         return (0, _map2.default)(chunkData, function (chunk, key) {
-          return _react.default.createElement(_Col.default, {
+          return _react.default.createElement(_reactstrap.Col, {
             key: key,
             md: Math.round(12 / field.chunks)
           }, _this3.radioButtonList(chunk));
         });
       };
 
-      return _react.default.createElement(_Row.default, null, chunks());
+      return _react.default.createElement(_reactstrap.Row, null, chunks());
     }
 
     return this.radioButtonList(filtered);

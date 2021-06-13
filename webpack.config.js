@@ -30,7 +30,7 @@ module.exports = {
   entry: [
     '@babel/polyfill',
     './example/Render.js',
-    'bootstrap-loader',
+    //'bootstrap-loader',
     './example/theme/style.css',
     'font-awesome-webpack!./example/theme/font-awesome.config.js',
   ],
@@ -67,7 +67,7 @@ module.exports = {
       }, {
         test: /\.css$/,
         loader: 'happypack/loader?id=css',
-        include: [path.resolve(__dirname, '../src'), 'node_modules', path.resolve(__dirname, './example')]
+        include: [path.resolve(__dirname, '../src'), '/node_modules', path.resolve(__dirname, './example')]
       }, {
         test: /\.woff2?(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader',
@@ -98,7 +98,11 @@ module.exports = {
         options: {
           limit: 10240
         }
-      }
+      },
+      {
+        test: /\.css$/i,
+        use: [ 'style-loader', 'css-loader' ],
+      },
     ]
   },
   resolve: {
@@ -111,7 +115,7 @@ module.exports = {
         options: babelLoaderQuery
       }, {
         loader: 'eslint-loader',
-        options: {emitWarning: true}
+        options: { emitWarning: true }
       }
     ]),
 
@@ -158,12 +162,6 @@ module.exports = {
         options: {
           sourceMap: true
         }
-      }, {
-        loader: 'sass-loader',
-        options: {
-          outputStyle: 'expanded',
-          sourceMap: true
-        }
       }
     ]),
     helpers.createHappyPlugin('css', [
@@ -182,12 +180,6 @@ module.exports = {
       }, {
         loader: 'postcss-loader',
         options: {
-          sourceMap: true
-        }
-      }, {
-        loader: 'sass-loader',
-        options: {
-          outputStyle: 'expanded',
           sourceMap: true
         }
       }

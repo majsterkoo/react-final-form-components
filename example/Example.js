@@ -1,5 +1,5 @@
 import React from 'react';
-import {hot} from 'react-hot-loader'
+import { hot } from 'react-hot-loader'
 import Well from 'react-bootstrap/lib/Well';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -17,13 +17,14 @@ import Dropdown from '../src/Bs/Dropdown';
 import Plupload from '../src/Bs/Plupload';
 import Resource from '../src/Bs/Resource';
 import TestResource from './TestResource'
+import InputDropdown from "../src/Bs/InputDropdown";
 
 require('./utils/moment');
 
 class Example extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.loadData = this.loadData.bind(this);
     this.state = {};
     this.values = {};
@@ -34,8 +35,8 @@ class Example extends React.Component {
     if (!this.values.complex) {
       this.values.complex = [];
     }
-    this.values.complex.push({name1: this.counter});
-    this.setState(Object.assign({}, this.values, {name: `raymond.${this.counter}`}), () => {
+    this.values.complex.push({ name1: this.counter });
+    this.setState(Object.assign({}, this.values, { name: `raymond.${this.counter}` }), () => {
       this.counter += 1;
     });
   }
@@ -48,7 +49,7 @@ class Example extends React.Component {
 
       return new Promise((resolve) => {
         if (values.firstname !== 'peter') {
-          resolve({firstname: 'Nope! must contain peter'});
+          resolve({ firstname: 'Nope! must contain peter' });
         } else {
           window.alert(JSON.stringify(values, 0, 2));
           resolve();
@@ -57,12 +58,12 @@ class Example extends React.Component {
     };
 
     const size = {
-      labelSize: {xs: 3},
-      fieldSize: {xs: 9}
+      labelSize: { xs: 3 },
+      fieldSize: { xs: 9 }
     };
 
     const sizeComplex = {
-      fieldSize: {xs: 12}
+      fieldSize: { xs: 12 }
     };
 
     return (
@@ -72,11 +73,11 @@ class Example extends React.Component {
           <Form
             debug
             className="form-horizontal"
-            subscription={{values: true}}
+            subscription={{ values: true }}
             validate={(data) => {
               const errors = {};
               if (data.firstname !== 'firstname' && data.firstname !== 'peter') {
-                errors.firstname = 'Firstname must contain \"firstname\"';
+                errors.firstname = 'Firstname must contain "firstname"';
               }
               return errors;
             }}
@@ -87,7 +88,7 @@ class Example extends React.Component {
               'choose-3': '1',
               'resource2': 2,
               'plupload': [
-                {file_original_name: 'test'}
+                { file_original_name: 'test' }
               ]
             }}
           >
@@ -100,11 +101,11 @@ class Example extends React.Component {
                 type={"text"}
                 {...size} />
               <Input label="Email" name={"email"} type={"email"} {...size} buttonAfter={() => (
-                <Dropdown title="Choose" name="choose-3" bu>
+                <InputDropdown title="Choose" name="choose-3" bu>
                   <option value="" selected>Choose</option>
                   <option value="0">Something</option>
                   <option value="1">Something else</option>
-                </Dropdown>
+                </InputDropdown>
               )}/>
               <DateTime label="birthday" name={"birthday"} {...size} conf={{timeFormat: false, unix: true}}/>
               <DateTime label="birthday2" name={"birthday2"} {...size} />
@@ -120,9 +121,9 @@ class Example extends React.Component {
                 <option value={true}>Something else</option>
               </Checkbox>
               <Dropdown title="Choose" label="Choose" name="choose-3" {...size}>
-                <option value="" selected>Choose</option>
-                <option value="0">Something</option>
-                <option value="1">Something else</option>
+                <option value="" selected>Another Choose</option>
+                <option value="10">Foo</option>
+                <option value="11">Bar</option>
               </Dropdown>
             </Well>
 

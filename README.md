@@ -1,6 +1,7 @@
 # React final form component
 
-A set of bootstrap components with added functionality to make it easier to create complex forms
+A set of bootstrap components with added functionality to make it easier to create complex forms.
+Originally forked from https://github.com/lemonCMS/react-final-form-components and rewrited for reactstrap.
 
 ### Installment
 Install with npm

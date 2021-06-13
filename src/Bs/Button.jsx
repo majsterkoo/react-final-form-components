@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import BSButton from 'react-bootstrap/lib/Button';
+//import BSButton from 'react-bootstrap/lib/Button';
+import { Button as BSButton } from 'reactstrap';
 import PropTypes from 'prop-types';
 
 class Button extends Component {

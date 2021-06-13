@@ -5,7 +5,7 @@ exports.default = void 0;
 
 var _react = _interopRequireWildcard(require("react"));
 
-var _Button = _interopRequireDefault(require("react-bootstrap/lib/Button"));
+var _reactstrap = require("reactstrap");
 
 var _propTypes = _interopRequireDefault(require("prop-types"));
 
@@ -33,7 +33,7 @@ function (_Component) {
         children = _this$props.children,
         rest = _objectWithoutProperties(_this$props, ["children"]);
 
-    return _react.default.createElement(_Button.default, _extends({}, rest, {
+    return _react.default.createElement(_reactstrap.Button, _extends({}, rest, {
       disabled: (this.context.status.submitting === true || this.context.status.valid === false || this.context.status.pristine === true) && this.context.status.dirtySinceLastSubmit === false
     }), children, this.props.type === 'submit' && this.context.status.submitting && ' ', this.props.type === 'submit' && this.context.status.submitting && _react.default.createElement("i", {
       className: "fa fa-circle-o-notch fa-spin"

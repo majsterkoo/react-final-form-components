@@ -6,20 +6,31 @@ import _get from 'lodash/get';
 import _pick from 'lodash/pick';
 import _filter from 'lodash/filter';
 import _isFunction from 'lodash/isFunction';
-import Col from 'react-bootstrap/lib/Col';
-import FormControl from 'react-bootstrap/lib/FormControl';
-import InputGroup from 'react-bootstrap/lib/InputGroup';
-import FormGroup from 'react-bootstrap/lib/FormGroup';
+import {
+  Col,
+  Button,
+  Input,
+  InputGroup,
+  FormGroup,
+  FormFeedback,
+  FormText,
+  InputGroupAddon,
+  UncontrolledDropdown,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+  InputGroupButtonDropdown
+} from 'reactstrap';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
-import {Field} from 'react-final-form';
+import { Field } from 'react-final-form';
 
 class Wrap extends React.Component {
 
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.input = {};
     this.custom = {};
     this.dropdownButton = this.dropdownButton.bind(this);
@@ -44,28 +55,28 @@ class Wrap extends React.Component {
       };
       if (item.props.selected && !props.input.value) {
         dropDownTitle = item.props.children;
-        menuItem.push(<MenuItem key={key} onSelect={select}>{item.props.children}</MenuItem>);
+        menuItem.push(<DropdownItem key={key} onClick={select}>{item.props.children}</DropdownItem>);
       } else {
         if (String(this.input.value) === String(item.props.value)) {
           dropDownTitle = item.props.children;
         }
-        menuItem.push(<MenuItem key={key} onSelect={select}>{item.props.children}</MenuItem>);
+        menuItem.push(<DropdownItem key={key} onClick={select}>{item.props.children}</DropdownItem>);
       }
       if (item.props.selected) {
-        menuItem.push(<MenuItem key={key + '_div'} divider />);
+        menuItem.push(<DropdownItem key={key + '_div'} divider />);
       }
 
     });
-    return {dropDownTitle, menuItem};
+    return { dropDownTitle, menuItem };
   }
 
 
-  dropdownButton(props, isStatic) {
-    const {dropDownTitle, menuItem} = this.dropDown(props);
+  dropdownButton(props, isStatic, inputItem) {
+    const { dropDownTitle, menuItem } = this.dropDown(props);
     const size = _get(props.field, 'bsSize', this.props.size);
     const thisSize = () => {
       if (size !== 'medium') {
-        return ({bsSize: size});
+        return ({ size: size });
       }
     };
 
@@ -76,14 +87,24 @@ class Wrap extends React.Component {
 
     if (isStatic === true || disabled === true) {
       return (
-        <FormControl.Static>
+        <Input>
           {dropDownTitle || _get(props.field, 'placeholder')}
-        </FormControl.Static>
+        </Input>
       );
     }
 
+    //input group dropdown button is not the same as dropdown
+    let Dropdown = UncontrolledDropdown;
+    //Dropdown = inputItem ? InputGroupButtonDropdown : UncontrolledDropdown;
+
     return (
-      <DropdownButton key={this.input.name}
+      <Dropdown key={this.input.name} {...thisSize()} id={'input-dropdown-addon' + this.input.name}>
+        <DropdownToggle>{dropDownTitle || _get(props.field, 'placeholder')}</DropdownToggle>
+        <DropdownMenu>
+          {menuItem}
+        </DropdownMenu>
+      </Dropdown>
+      /*<DropdownButton key={this.input.name}
         onClick={(event) => {
           event.preventDefault();
         }}
@@ -91,12 +112,12 @@ class Wrap extends React.Component {
         title={dropDownTitle || _get(props.field, 'placeholder')}
         id={'input-dropdown-addon' + this.input.name}>
         {menuItem}
-      </DropdownButton>
+      </DropdownButton>*/
     );
   }
 
   renderField(props) {
-    const {input, help, meta: {touched, error, submitError, submitFailed, valid}, ...custom} = props;
+    const { input, help, meta: { touched, error, submitError, submitFailed, valid }, ...custom } = props;
     this.input = input;
     const size = _get(props.field, 'bsSize', this.props.size);
     if (props.field && props.field.hidden && _isFunction(props.field.hidden)) {
@@ -111,7 +132,7 @@ class Wrap extends React.Component {
 
     const thisSize = () => {
       if (size !== 'medium') {
-        return ({bsSize: size});
+        return ({ size: size });
       }
     };
 
@@ -127,7 +148,7 @@ class Wrap extends React.Component {
       }
     };
 
-    const add = _pick(custom, ['type', 'placeholder', 'rows', 'cols', 'bsClass']);
+    const add = _pick(custom, ['type', 'placeholder', 'rows', 'cols', 'color']);
     if (add.type === 'select') {
       add.componentClass = 'select';
     }
@@ -144,8 +165,8 @@ class Wrap extends React.Component {
     if (props.field.rows) {
       add.rows = props.field.rows;
     }
-    if (props.field.bsClass) {
-      add.bsClass = props.field.bsClass;
+    if (props.field.color) {
+      add.color = props.field.color;
     }
 
     const component = () => {
@@ -158,7 +179,7 @@ class Wrap extends React.Component {
       if (this.context.isStatic === true || _get(props.field, 'static', false) === true) {
         const value = () => {
           if (props.field.type === 'select') {
-            return _map(_filter(props.field.options, {value: this.input.value}), (item, key) => {
+            return _map(_filter(props.field.options, { value: this.input.value }), (item, key) => {
               return (<span key={key}>{item.desc}</span>);
             });
           }
@@ -170,9 +191,9 @@ class Wrap extends React.Component {
             return this.dropdownButton(props, true);
           default: {
             return (
-              <FormControl.Static>
+              <Input>
                 {value()}
-              </FormControl.Static>);
+              </Input>);
           }
         }
       }
@@ -180,20 +201,22 @@ class Wrap extends React.Component {
       switch (props.field.type) {
         case 'dropdown':
           return this.dropdownButton(props, false);
+        case 'input-dropdown':
+          return this.dropdownButton(props, false, true);
         case 'textarea':
-          return (<FormControl
-            componentClass="textarea"
+          return <Input
+            type="textarea"
             {...input}
             {...add}
-          />);
+          />;
         case 'select':
-          return (<FormControl
-            componentClass="select"
+          return <Input
+            type="select"
             {...input}
             {...add}
-          >{this.options(props)}</FormControl>);
+          >{this.options(props)}</Input>;
         default:
-          return (<FormControl
+          return (<Input
             {...input}
             {...add}
           />);
@@ -212,25 +235,25 @@ class Wrap extends React.Component {
 
     const buttonBefore = () => {
       if (_has(props.field, 'buttonBefore')) {
-        return (<InputGroup.Button>{props.field.buttonBefore()}</InputGroup.Button>);
+        return (<InputGroupAddon addonType={"prepend"}><Button>{props.field.buttonBefore()}</Button></InputGroupAddon>);
       }
     };
 
     const buttonAfter = () => {
       if (_has(props.field, 'buttonAfter')) {
-        return (<InputGroup.Button>{props.field.buttonAfter()}</InputGroup.Button>);
+        return (<InputGroupAddon addonType={"append"}><Button>{props.field.buttonAfter()}</Button></InputGroupAddon>);
       }
     };
 
     const addonBefore = () => {
       if (_has(props.field, 'addonBefore')) {
-        return (<InputGroup.Addon>{_get(props.field, 'addonBefore')}</InputGroup.Addon>);
+        return (<InputGroupAddon addonType={"prepend"}>{_get(props.field, 'addonBefore')}</InputGroupAddon>);
       }
     };
 
     const addonAfter = () => {
       if (_has(props.field, 'addonAfter')) {
-        return (<InputGroup.Addon>{_get(props.field, 'addonAfter')}</InputGroup.Addon>);
+        return (<InputGroupAddon addonType={"append"}>{_get(props.field, 'addonAfter')}</InputGroupAddon>);
       }
     };
 
@@ -276,15 +299,15 @@ class Wrap extends React.Component {
       {getLabel()}
       <Col {...fieldSize()}>
         {getField()}
-        {((touched && error) || (submitFailed && submitError)) && <FormControl.Feedback />}
-        {props.field.help && (!touched || (!submitError && !error)) && <HelpBlock>{props.field.help}</HelpBlock>}
-        {((touched && error) || (submitFailed && submitError)) && <HelpBlock>{(submitError || error)}</HelpBlock>}
+        {((touched && error) || (submitFailed && submitError)) && <FormFeedback />}
+        {props.field.help && (!touched || (!submitError && !error)) && <FormText>{props.field.help}</FormText>}
+        {((touched && error) || (submitFailed && submitError)) && <FormFeedback>{(submitError || error)}</FormFeedback>}
       </Col>
     </FormGroup>);
 
     if(this.context.debug) {
       return (
-        <div style={{position: 'relative'}}>
+        <div style={{ position: 'relative' }}>
           {rendered}
         </div>
       );
@@ -294,7 +317,7 @@ class Wrap extends React.Component {
   }
 
   render() {
-    const {name, ...rest} = this.props;
+    const { name, ...rest } = this.props;
     return (
       <Field
         component={this.renderField}

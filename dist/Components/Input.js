@@ -5,7 +5,7 @@ exports.default = void 0;
 
 var _react = _interopRequireDefault(require("react"));
 
-var _FormControl = _interopRequireDefault(require("react-bootstrap/lib/FormControl"));
+var _reactstrap = require("reactstrap");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14,7 +14,7 @@ function _extends() { _extends = Object.assign || function (target) { for (var i
 var _default = function _default(_ref) {
   var input = _ref.input,
       field = _ref.field;
-  return _react.default.createElement(_FormControl.default, _extends({
+  return _react.default.createElement(_reactstrap.Input, _extends({
     type: field.type
   }, input));
 };

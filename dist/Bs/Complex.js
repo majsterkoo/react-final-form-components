@@ -15,13 +15,7 @@ var _reactFinalFormArrays = require("react-final-form-arrays");
 
 var _Panel = _interopRequireDefault(require("react-bootstrap/lib/Panel"));
 
-var _Button = _interopRequireDefault(require("react-bootstrap/lib/Button"));
-
-var _Row = _interopRequireDefault(require("react-bootstrap/lib/Row"));
-
-var _Col = _interopRequireDefault(require("react-bootstrap/lib/Col"));
-
-var _ButtonToolbar = _interopRequireDefault(require("react-bootstrap/lib/ButtonToolbar"));
+var _reactstrap = require("reactstrap");
 
 var _ControlLabel = _interopRequireDefault(require("react-bootstrap/lib/ControlLabel"));
 
@@ -68,13 +62,13 @@ function (_React$Component) {
 
       if (staticField !== true) {
         if (complexIndex > 0 && count > 1) {
-          returnButtons.push(_react.default.createElement(_Button.default, {
+          returnButtons.push(_react.default.createElement(_reactstrap.Button, {
             key: 2,
             onClick: function onClick() {
               return move(complexIndex, complexIndex - 1);
             },
-            bsStyle: (0, _get3.default)(_this2.props.moveBtn, 'bsStyle', 'default'),
-            bsSize: (0, _get3.default)(_this2.props.moveBtn, 'bsSize', undefined),
+            color: (0, _get3.default)(_this2.props.moveBtn, 'bsStyle', 'default'),
+            size: (0, _get3.default)(_this2.props.moveBtn, 'bsSize', undefined),
             disabled: disabled,
             type: "button"
           }, _react.default.createElement("i", {
@@ -83,13 +77,13 @@ function (_React$Component) {
         }
 
         if (count > 1 && complexIndex < count - 1) {
-          returnButtons.push(_react.default.createElement(_Button.default, {
+          returnButtons.push(_react.default.createElement(_reactstrap.Button, {
             key: 3,
             onClick: function onClick() {
               return move(complexIndex, complexIndex + 1);
             },
-            bsStyle: (0, _get3.default)(_this2.props.moveBtn, 'bsStyle', 'default'),
-            bsSize: (0, _get3.default)(_this2.props.moveBtn, 'bsSize', undefined),
+            color: (0, _get3.default)(_this2.props.moveBtn, 'bsStyle', 'default'),
+            size: (0, _get3.default)(_this2.props.moveBtn, 'bsSize', undefined),
             disabled: disabled,
             type: "button"
           }, _react.default.createElement("i", {
@@ -98,13 +92,13 @@ function (_React$Component) {
         }
 
         if (_this2.props.mandatory && count > 1 || !_this2.props.mandatory && count > 0) {
-          returnButtons.push(_react.default.createElement(_Button.default, {
+          returnButtons.push(_react.default.createElement(_reactstrap.Button, {
             key: 1,
             onClick: function onClick() {
               return remove(complexIndex);
             },
-            bsStyle: (0, _get3.default)(_this2.props.removeBtn, 'bsStyle', 'danger'),
-            bsSize: (0, _get3.default)(_this2.props.removeBtn, 'bsSize', undefined),
+            color: (0, _get3.default)(_this2.props.removeBtn, 'bsStyle', 'danger'),
+            size: (0, _get3.default)(_this2.props.removeBtn, 'bsSize', undefined),
             className: (0, _get3.default)(_this2.props.removeBtn, 'className', ''),
             title: (0, _get3.default)(_this2.props.removeBtn, 'title', ''),
             disabled: disabled,
@@ -124,7 +118,7 @@ function (_React$Component) {
 
     var headerDiv = _react.default.createElement("div", {
       className: "clearfix"
-    }, _react.default.createElement(_ButtonToolbar.default, null, buttons()), header);
+    }, _react.default.createElement(_reactstrap.ButtonGroup, null, buttons()), header);
 
     var component = function component() {
       if (_this2.props.render) {
@@ -140,7 +134,7 @@ function (_React$Component) {
     };
 
     if (this.props.row) {
-      return _react.default.createElement(_Row.default, null, _react.default.createElement(_Col.default, this.props.left, component()), _react.default.createElement(_Col.default, this.props.right, headerDiv));
+      return _react.default.createElement(_reactstrap.Row, null, _react.default.createElement(_reactstrap.Col, this.props.left, component()), _react.default.createElement(_reactstrap.Col, this.props.right, headerDiv));
     }
 
     return _react.default.createElement(_Panel.default, {
@@ -162,7 +156,7 @@ function (_React$Component) {
     var thisSize = function thisSize() {
       if (_this3.props.size !== 'medium') {
         return {
-          bsSize: _this3.props.size
+          size: _this3.props.size
         };
       }
     };
@@ -196,14 +190,14 @@ function (_React$Component) {
 
     if (this.props.label) {
       if (this.state.collapsed === true || this.state.collapsed === null && this.props.collapsed && this.props.collapsed === true) {
-        return _react.default.createElement(_Row.default, {
+        return _react.default.createElement(_reactstrap.Row, {
           className: "rfg-cmplx rfg-cmplx-collapsed"
-        }, _react.default.createElement(_Col.default, _extends({
+        }, _react.default.createElement(_reactstrap.Col, _extends({
           componentClass: _ControlLabel.default
-        }, labelSize()), _react.default.createElement(_Button.default, _extends({
+        }, labelSize()), _react.default.createElement(_reactstrap.Button, _extends({
           type: "button",
           onClick: toggle,
-          bsStyle: "link"
+          color: "link"
         }, thisSize()), '+ ', this.props.label)));
       }
     }
@@ -219,14 +213,14 @@ function (_React$Component) {
         var bsStyle = function bsStyle() {
           if ((0, _get3.default)(_this3.props.addBtn, 'bsStyle') && (0, _get3.default)(_this3.props.addBtn, 'bsStyle') !== 'default') {
             return {
-              bsStyle: (0, _get3.default)(_this3.props.addBtn, 'bsStyle')
+              color: (0, _get3.default)(_this3.props.addBtn, 'bsStyle')
             };
           }
         };
 
         return _react.default.createElement("div", {
           className: "rfg-cmplx-btn-add"
-        }, staticField !== true && _react.default.createElement(_Button.default, _extends({
+        }, staticField !== true && _react.default.createElement(_reactstrap.Button, _extends({
           type: "button",
           onClick: function onClick() {
             return fields.push({});
@@ -238,15 +232,15 @@ function (_React$Component) {
       }
     };
 
-    return _react.default.createElement(_Row.default, {
+    return _react.default.createElement(_reactstrap.Row, {
       className: "rfg-cmplx rfg-cmplx-collapsed"
-    }, this.props.label && _react.default.createElement(_Col.default, _extends({
+    }, this.props.label && _react.default.createElement(_reactstrap.Col, _extends({
       componentClass: _ControlLabel.default
-    }, labelSize()), _react.default.createElement(_Button.default, _extends({
+    }, labelSize()), _react.default.createElement(_reactstrap.Button, _extends({
       type: "button",
       onClick: toggle,
-      bsStyle: "link"
-    }, thisSize()), '- ', this.props.label)), _react.default.createElement(_Col.default, fieldSize(), fields.map(function (field, key) {
+      color: "link"
+    }, thisSize()), '- ', this.props.label)), _react.default.createElement(_reactstrap.Col, fieldSize(), fields.map(function (field, key) {
       return _react.default.createElement("div", {
         key: key,
         className: "rfg-cmplx-fields"

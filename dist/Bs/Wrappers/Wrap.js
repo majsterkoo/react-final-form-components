@@ -19,13 +19,7 @@ var _filter2 = _interopRequireDefault(require("lodash/filter"));
 
 var _isFunction2 = _interopRequireDefault(require("lodash/isFunction"));
 
-var _Col = _interopRequireDefault(require("react-bootstrap/lib/Col"));
-
-var _FormControl = _interopRequireDefault(require("react-bootstrap/lib/FormControl"));
-
-var _InputGroup = _interopRequireDefault(require("react-bootstrap/lib/InputGroup"));
-
-var _FormGroup = _interopRequireDefault(require("react-bootstrap/lib/FormGroup"));
+var _reactstrap = require("reactstrap");
 
 var _ControlLabel = _interopRequireDefault(require("react-bootstrap/lib/ControlLabel"));
 
@@ -50,10 +44,10 @@ function _assertThisInitialized(self) { if (self === void 0) { throw new Referen
 var Wrap =
 /*#__PURE__*/
 function (_React$Component) {
-  function Wrap() {
+  function Wrap(props) {
     var _this;
 
-    _this = _React$Component.call(this) || this;
+    _this = _React$Component.call(this, props) || this;
     _this.input = {};
     _this.custom = {};
     _this.dropdownButton = _this.dropdownButton.bind(_assertThisInitialized(_assertThisInitialized(_this)));
@@ -85,23 +79,23 @@ function (_React$Component) {
 
       if (item.props.selected && !props.input.value) {
         dropDownTitle = item.props.children;
-        menuItem.push(_react.default.createElement(_MenuItem.default, {
+        menuItem.push(_react.default.createElement(_reactstrap.DropdownItem, {
           key: key,
-          onSelect: select
+          onClick: select
         }, item.props.children));
       } else {
         if (String(_this2.input.value) === String(item.props.value)) {
           dropDownTitle = item.props.children;
         }
 
-        menuItem.push(_react.default.createElement(_MenuItem.default, {
+        menuItem.push(_react.default.createElement(_reactstrap.DropdownItem, {
           key: key,
-          onSelect: select
+          onClick: select
         }, item.props.children));
       }
 
       if (item.props.selected) {
-        menuItem.push(_react.default.createElement(_MenuItem.default, {
+        menuItem.push(_react.default.createElement(_reactstrap.DropdownItem, {
           key: key + '_div',
           divider: true
         }));
@@ -113,7 +107,7 @@ function (_React$Component) {
     };
   };
 
-  _proto.dropdownButton = function dropdownButton(props, isStatic) {
+  _proto.dropdownButton = function dropdownButton(props, isStatic, inputItem) {
     var _this$dropDown = this.dropDown(props),
         dropDownTitle = _this$dropDown.dropDownTitle,
         menuItem = _this$dropDown.menuItem;
@@ -123,7 +117,7 @@ function (_React$Component) {
     var thisSize = function thisSize() {
       if (size !== 'medium') {
         return {
-          bsSize: size
+          size: size
         };
       }
     };
@@ -135,18 +129,27 @@ function (_React$Component) {
     }
 
     if (isStatic === true || disabled === true) {
-      return _react.default.createElement(_FormControl.default.Static, null, dropDownTitle || (0, _get2.default)(props.field, 'placeholder'));
-    }
+      return _react.default.createElement(_reactstrap.Input, null, dropDownTitle || (0, _get2.default)(props.field, 'placeholder'));
+    } //input group dropdown button is not the same as dropdown
 
-    return _react.default.createElement(_DropdownButton.default, _extends({
-      key: this.input.name,
-      onClick: function onClick(event) {
-        event.preventDefault();
-      }
+
+    var Dropdown = _reactstrap.UncontrolledDropdown; //Dropdown = inputItem ? InputGroupButtonDropdown : UncontrolledDropdown;
+
+    return _react.default.createElement(Dropdown, _extends({
+      key: this.input.name
     }, thisSize(), {
-      title: dropDownTitle || (0, _get2.default)(props.field, 'placeholder'),
       id: 'input-dropdown-addon' + this.input.name
-    }), menuItem);
+    }), _react.default.createElement(_reactstrap.DropdownToggle, null, dropDownTitle || (0, _get2.default)(props.field, 'placeholder')), _react.default.createElement(_reactstrap.DropdownMenu, null, menuItem))
+    /*<DropdownButton key={this.input.name}
+      onClick={(event) => {
+        event.preventDefault();
+      }}
+      {...thisSize()}
+      title={dropDownTitle || _get(props.field, 'placeholder')}
+      id={'input-dropdown-addon' + this.input.name}>
+      {menuItem}
+    </DropdownButton>*/
+    ;
   };
 
   _proto.renderField = function renderField(props) {
@@ -178,7 +181,7 @@ function (_React$Component) {
     var thisSize = function thisSize() {
       if (size !== 'medium') {
         return {
-          bsSize: size
+          size: size
         };
       }
     };
@@ -195,7 +198,7 @@ function (_React$Component) {
       }
     };
 
-    var add = (0, _pick2.default)(custom, ['type', 'placeholder', 'rows', 'cols', 'bsClass']);
+    var add = (0, _pick2.default)(custom, ['type', 'placeholder', 'rows', 'cols', 'color']);
 
     if (add.type === 'select') {
       add.componentClass = 'select';
@@ -217,8 +220,8 @@ function (_React$Component) {
       add.rows = props.field.rows;
     }
 
-    if (props.field.bsClass) {
-      add.bsClass = props.field.bsClass;
+    if (props.field.color) {
+      add.color = props.field.color;
     }
 
     var component = function component() {
@@ -249,7 +252,7 @@ function (_React$Component) {
 
           default:
             {
-              return _react.default.createElement(_FormControl.default.Static, null, value());
+              return _react.default.createElement(_reactstrap.Input, null, value());
             }
         }
       }
@@ -258,18 +261,21 @@ function (_React$Component) {
         case 'dropdown':
           return _this3.dropdownButton(props, false);
 
+        case 'input-dropdown':
+          return _this3.dropdownButton(props, false, true);
+
         case 'textarea':
-          return _react.default.createElement(_FormControl.default, _extends({
-            componentClass: "textarea"
+          return _react.default.createElement(_reactstrap.Input, _extends({
+            type: "textarea"
           }, input, add));
 
         case 'select':
-          return _react.default.createElement(_FormControl.default, _extends({
-            componentClass: "select"
+          return _react.default.createElement(_reactstrap.Input, _extends({
+            type: "select"
           }, input, add), _this3.options(props));
 
         default:
-          return _react.default.createElement(_FormControl.default, _extends({}, input, add));
+          return _react.default.createElement(_reactstrap.Input, _extends({}, input, add));
       }
     };
 
@@ -285,31 +291,39 @@ function (_React$Component) {
 
     var buttonBefore = function buttonBefore() {
       if ((0, _has2.default)(props.field, 'buttonBefore')) {
-        return _react.default.createElement(_InputGroup.default.Button, null, props.field.buttonBefore());
+        return _react.default.createElement(_reactstrap.InputGroupAddon, {
+          addonType: "prepend"
+        }, _react.default.createElement(_reactstrap.Button, null, props.field.buttonBefore()));
       }
     };
 
     var buttonAfter = function buttonAfter() {
       if ((0, _has2.default)(props.field, 'buttonAfter')) {
-        return _react.default.createElement(_InputGroup.default.Button, null, props.field.buttonAfter());
+        return _react.default.createElement(_reactstrap.InputGroupAddon, {
+          addonType: "append"
+        }, _react.default.createElement(_reactstrap.Button, null, props.field.buttonAfter()));
       }
     };
 
     var addonBefore = function addonBefore() {
       if ((0, _has2.default)(props.field, 'addonBefore')) {
-        return _react.default.createElement(_InputGroup.default.Addon, null, (0, _get2.default)(props.field, 'addonBefore'));
+        return _react.default.createElement(_reactstrap.InputGroupAddon, {
+          addonType: "prepend"
+        }, (0, _get2.default)(props.field, 'addonBefore'));
       }
     };
 
     var addonAfter = function addonAfter() {
       if ((0, _has2.default)(props.field, 'addonAfter')) {
-        return _react.default.createElement(_InputGroup.default.Addon, null, (0, _get2.default)(props.field, 'addonAfter'));
+        return _react.default.createElement(_reactstrap.InputGroupAddon, {
+          addonType: "append"
+        }, (0, _get2.default)(props.field, 'addonAfter'));
       }
     };
 
     var getField = function getField() {
       if ((0, _has2.default)(props.field, 'addonBefore') || (0, _has2.default)(props.field, 'addonAfter') || (0, _has2.default)(props.field, 'buttonBefore') || (0, _has2.default)(props.field, 'buttonAfter')) {
-        return _react.default.createElement(_InputGroup.default, null, buttonBefore(), addonBefore(), component(), addonAfter(), buttonAfter());
+        return _react.default.createElement(_reactstrap.InputGroup, null, buttonBefore(), addonBefore(), component(), addonAfter(), buttonAfter());
       }
 
       return component();
@@ -321,15 +335,15 @@ function (_React$Component) {
 
     var getLabel = function getLabel() {
       if (props.field.label) {
-        return _react.default.createElement(_Col.default, _extends({
+        return _react.default.createElement(_reactstrap.Col, _extends({
           componentClass: _ControlLabel.default
         }, labelSize()), props.field.label);
       }
     };
 
-    var rendered = _react.default.createElement(_FormGroup.default, _extends({}, thisSize(), {
+    var rendered = _react.default.createElement(_reactstrap.FormGroup, _extends({}, thisSize(), {
       validationState: validationState()
-    }), getLabel(), _react.default.createElement(_Col.default, fieldSize(), getField(), (touched && error || submitFailed && submitError) && _react.default.createElement(_FormControl.default.Feedback, null), props.field.help && (!touched || !submitError && !error) && _react.default.createElement(_HelpBlock.default, null, props.field.help), (touched && error || submitFailed && submitError) && _react.default.createElement(_HelpBlock.default, null, submitError || error)));
+    }), getLabel(), _react.default.createElement(_reactstrap.Col, fieldSize(), getField(), (touched && error || submitFailed && submitError) && _react.default.createElement(_reactstrap.FormFeedback, null), props.field.help && (!touched || !submitError && !error) && _react.default.createElement(_reactstrap.FormText, null, props.field.help), (touched && error || submitFailed && submitError) && _react.default.createElement(_reactstrap.FormFeedback, null, submitError || error)));
 
     if (this.context.debug) {
       return _react.default.createElement("div", {

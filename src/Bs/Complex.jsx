@@ -2,12 +2,9 @@ import PropTypes from 'prop-types';
 import _get from 'lodash/get';
 import _has from 'lodash/has';
 import React from 'react';
-import {FieldArray} from 'react-final-form-arrays';
+import { FieldArray } from 'react-final-form-arrays';
 import Panel from 'react-bootstrap/lib/Panel';
-import Button from 'react-bootstrap/lib/Button';
-import Row from 'react-bootstrap/lib/Row';
-import Col from 'react-bootstrap/lib/Col';
-import ButtonToolbar from 'react-bootstrap/lib/ButtonToolbar';
+import { Button, Row, Col, ButtonGroup } from 'reactstrap';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import _isFunction from 'lodash/isFunction';
 
@@ -39,8 +36,8 @@ class Complex extends React.Component {
             <Button
               key={2}
               onClick={() => move(complexIndex, complexIndex - 1)}
-              bsStyle={_get(this.props.moveBtn, 'bsStyle', 'default')}
-              bsSize={_get(this.props.moveBtn, 'bsSize', undefined)}
+              color={_get(this.props.moveBtn, 'bsStyle', 'default')}
+              size={_get(this.props.moveBtn, 'bsSize', undefined)}
               disabled={disabled}
               type="button"
             >
@@ -53,8 +50,8 @@ class Complex extends React.Component {
             <Button
               key={3}
               onClick={() => move(complexIndex, complexIndex + 1)}
-              bsStyle={_get(this.props.moveBtn, 'bsStyle', 'default')}
-              bsSize={_get(this.props.moveBtn, 'bsSize', undefined)}
+              color={_get(this.props.moveBtn, 'bsStyle', 'default')}
+              size={_get(this.props.moveBtn, 'bsSize', undefined)}
               disabled={disabled}
               type="button"
             >
@@ -68,8 +65,8 @@ class Complex extends React.Component {
             <Button
               key={1}
               onClick={() => remove(complexIndex)}
-              bsStyle={_get(this.props.removeBtn, 'bsStyle', 'danger')}
-              bsSize={_get(this.props.removeBtn, 'bsSize', undefined)}
+              color={_get(this.props.removeBtn, 'bsStyle', 'danger')}
+              size={_get(this.props.removeBtn, 'bsSize', undefined)}
               className={_get(this.props.removeBtn, 'className', '')}
               title={_get(this.props.removeBtn, 'title', '')}
               disabled={disabled}
@@ -83,11 +80,11 @@ class Complex extends React.Component {
       return returnButtons;
     };
 
-    const {header, footer} = _get(this.props, 'panel', {});
+    const { header, footer } = _get(this.props, 'panel', {});
     const headerDiv = (<div className="clearfix">
-      <ButtonToolbar>
+      <ButtonGroup>
         {buttons()}
-      </ButtonToolbar>
+      </ButtonGroup>
       {header}
     </div>);
 
@@ -127,7 +124,7 @@ class Complex extends React.Component {
   }
 
   renderComplex(props) {
-    const {fields, meta: {touched, error}} = props;
+    const { fields, meta: { touched, error } }  = props;
     const staticField = props.static;
 
     this.push = props.fields.push;
@@ -135,7 +132,7 @@ class Complex extends React.Component {
 
     const thisSize = () => {
       if (this.props.size !== 'medium') {
-        return ({bsSize: this.props.size});
+        return ({ size: this.props.size });
       }
     };
 
@@ -158,7 +155,7 @@ class Complex extends React.Component {
       } else if (this.state.collapsed === false) {
         state = true;
       }
-      this.setState({'collapsed': state}, () => {
+      this.setState({ 'collapsed': state }, () => {
         // this.props.formChange('itemsx', state);
       });
     };
@@ -167,7 +164,7 @@ class Complex extends React.Component {
         return (
           <Row className="rfg-cmplx rfg-cmplx-collapsed">
             <Col componentClass={ControlLabel} {...labelSize()}>
-              <Button type="button" onClick={toggle} bsStyle="link" {...thisSize()}>
+              <Button type="button" onClick={toggle} color="link" {...thisSize()}>
                 {'+ '}
                 {this.props.label}
               </Button>
@@ -185,7 +182,7 @@ class Complex extends React.Component {
       if (_get(this.props, 'multiple', true) === true || fields.length === 0) {
         const bsStyle = () => {
           if (_get(this.props.addBtn, 'bsStyle') && _get(this.props.addBtn, 'bsStyle') !== 'default') {
-            return ({bsStyle: _get(this.props.addBtn, 'bsStyle')});
+            return ({ color: _get(this.props.addBtn, 'bsStyle') });
           }
         };
         return (
@@ -210,7 +207,7 @@ class Complex extends React.Component {
       <Row className="rfg-cmplx rfg-cmplx-collapsed">
         {this.props.label &&
         <Col componentClass={ControlLabel} {...labelSize()}>
-          <Button type="button" onClick={toggle} bsStyle="link" {...thisSize()}>
+          <Button type="button" onClick={toggle} color="link" {...thisSize()}>
             {'- '}
             {this.props.label}
           </Button>

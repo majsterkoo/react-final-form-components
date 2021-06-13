@@ -1,8 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 // import {SortableElement} from 'react-sortable-hoc';
 import Line from './Types/Line';
 import Link from './Types/Link';
+import Example from '../Example';
 
 class Render extends Component {
   constructor() {
@@ -25,7 +26,8 @@ class Render extends Component {
   render() {
     return (
       <div>
-        {this.components()}
+        <Example/>
+        {/*this.components()*/}
       </div>
     );
   }
