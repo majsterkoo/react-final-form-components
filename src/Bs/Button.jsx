@@ -3,10 +3,21 @@ import BSButton from 'react-bootstrap/lib/Button';
 import PropTypes from 'prop-types';
 
 class Button extends Component {
+
+  constructor(props, context) {
+    super(props, context);
+    this.onClick = this.onClick.bind(this);
+  }
+
+  onClick(event){
+    this.props.onMutation && this.props.onMutation(this.context.mutators);
+  }
+
   render() {
-    const {children, ...rest} = this.props;
+    const {children, type, ...rest} = this.props;
+
     return (
-      <BSButton {...rest} disabled={(this.context.status.submitting === true || this.context.status.valid === false  || this.context.status.pristine === true ) && this.context.status.dirtySinceLastSubmit === false}>
+      <BSButton onClick={this.onClick} {...rest} disabled={(type==='submit') && (this.context.status.submitting === true || this.context.status.valid === false  || this.context.status.pristine === true ) && this.context.status.dirtySinceLastSubmit === false}>
         {children}
         {this.props.type === 'submit' && this.context.status.submitting && ' '}
         {this.props.type === 'submit' && this.context.status.submitting && <i className="fa fa-circle-o-notch fa-spin" />}
@@ -17,10 +28,12 @@ class Button extends Component {
 
 Button.propTypes = {
   children: PropTypes.oneOfType([PropTypes.array, PropTypes.object, PropTypes.string]),
-  type: PropTypes.string
+  type: PropTypes.string,
+  onMutation: PropTypes.func
 };
 Button.defaultProps = {};
 Button.contextTypes = {
-  status: PropTypes.object
+  status: PropTypes.object,
+  mutators: PropTypes.object,
 };
 export default Button;

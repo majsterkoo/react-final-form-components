@@ -216,7 +216,7 @@ function (_React$Component2) {
         return {};
       },
       initialValues: this.props.initialValues || {},
-      mutators: _objectSpread({}, _finalFormArrays.default),
+      mutators: _objectSpread({}, this.props.mutators, _finalFormArrays.default),
       render: function render(_ref3) {
         var handleSubmit = _ref3.handleSubmit,
             rest = _objectWithoutProperties(_ref3, ["handleSubmit"]);
@@ -244,11 +244,13 @@ FormObj.propTypes = {
   className: _propTypes.default.string,
   shouldComponentUpdate: _propTypes.default.oneOfType([_propTypes.default.func, _propTypes.default.object, _propTypes.default.bool, _propTypes.default.string]),
   listen: _propTypes.default.func,
-  debug: _propTypes.default.bool
+  debug: _propTypes.default.bool,
+  mutators: _propTypes.default.object
 };
 FormObj.defaultProps = {
   debug: false,
-  keepDirtyOnReinitialize: false
+  keepDirtyOnReinitialize: false,
+  mutators: {}
 };
 var _default = FormObj;
 exports.default = _default;

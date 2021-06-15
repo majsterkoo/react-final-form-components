@@ -23,7 +23,8 @@ class ContextWrapper extends React.Component {
     checkCondition: PropTypes.func.isRequired,
     isStatic: PropTypes.bool.isRequired,
     debug: PropTypes.bool.isRequired,
-    status: PropTypes.object.isRequired
+    status: PropTypes.object.isRequired,
+    mutators: PropTypes.object.isRequired,
   };
 
   getChildContext() {
@@ -31,7 +32,8 @@ class ContextWrapper extends React.Component {
       checkCondition: this.checkCondition,
       isStatic: this.props.static,
       debug: this.props.debug,
-      status: this.getStatus()
+      status: this.getStatus(),
+      mutators: this.props.mutators,
     };
   }
 
@@ -102,7 +104,8 @@ ContextWrapper.propTypes = {
   submitting: PropTypes.bool,
   valid: PropTypes.bool,
   validating: PropTypes.bool,
-  listen: PropTypes.func
+  listen: PropTypes.func,
+  mutators: PropTypes.object,
 };
 
 ContextWrapper.defaultProps = {
@@ -129,10 +132,10 @@ class FormObj extends React.Component {
       subscription={this.props.subscription}
       validate={this.props.validate || (() => ({}))}
       initialValues={this.props.initialValues || {}}
-      mutators={{...arrayMutators}}
-      render={({handleSubmit, ...rest}) => {
+      mutators={{...this.props.mutators, ...arrayMutators}}
+      render={({handleSubmit, mutators, ...rest}) => {
         return (
-          <ContextWrapper {..._omit(this.props, ['onSubmit', 'validate', 'initialValues', 'subscription', 'shouldComponentUpdate'])} {...rest}>
+          <ContextWrapper {..._omit(this.props, ['onSubmit', 'validate', 'initialValues', 'subscription', 'shouldComponentUpdate'])} {...rest} mutators={mutators}>
             <form
               onSubmit={handleSubmit}
               className={this.props.className}>
@@ -153,11 +156,13 @@ FormObj.propTypes = {
   className: PropTypes.string,
   shouldComponentUpdate: PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.bool, PropTypes.string]),
   listen: PropTypes.func,
-  debug: PropTypes.bool
+  debug: PropTypes.bool,
+  mutators: PropTypes.object,
 };
 FormObj.defaultProps = {
   debug: false,
-  keepDirtyOnReinitialize: false
+  keepDirtyOnReinitialize: false,
+  mutators: {},
 };
 
 export default FormObj;
