@@ -77,25 +77,27 @@ function (_React$Component) {
       checkCondition: this.checkCondition,
       isStatic: this.props.static,
       debug: this.props.debug,
-      status: this.getStatus()
+      status: this.getStatus(),
+      mutators: this.props.form.mutators
     };
   };
 
   _proto.getStatus = function getStatus() {
-    var _this$props = this.props,
-        dirty = _this$props.dirty,
-        dirtySinceLastSubmit = _this$props.dirtySinceLastSubmit,
-        error = _this$props.error,
-        errors = _this$props.errors,
-        invalid = _this$props.invalid,
-        pristine = _this$props.pristine,
-        submitError = _this$props.submitError,
-        submitErrors = _this$props.submitErrors,
-        submitFailed = _this$props.submitFailed,
-        submitSucceeded = _this$props.submitSucceeded,
-        submitting = _this$props.submitting,
-        valid = _this$props.valid,
-        validating = _this$props.validating;
+    var _this$props$form$getS = this.props.form.getState(),
+        dirty = _this$props$form$getS.dirty,
+        dirtySinceLastSubmit = _this$props$form$getS.dirtySinceLastSubmit,
+        error = _this$props$form$getS.error,
+        errors = _this$props$form$getS.errors,
+        invalid = _this$props$form$getS.invalid,
+        pristine = _this$props$form$getS.pristine,
+        submitError = _this$props$form$getS.submitError,
+        submitErrors = _this$props$form$getS.submitErrors,
+        submitFailed = _this$props$form$getS.submitFailed,
+        submitSucceeded = _this$props$form$getS.submitSucceeded,
+        submitting = _this$props$form$getS.submitting,
+        valid = _this$props$form$getS.valid,
+        validating = _this$props$form$getS.validating;
+
     return {
       dirty: dirty,
       dirtySinceLastSubmit: dirtySinceLastSubmit,
@@ -155,7 +157,8 @@ _defineProperty(ContextWrapper, "childContextTypes", {
   checkCondition: _propTypes.default.func.isRequired,
   isStatic: _propTypes.default.bool.isRequired,
   debug: _propTypes.default.bool.isRequired,
-  status: _propTypes.default.object.isRequired
+  status: _propTypes.default.object.isRequired,
+  mutators: _propTypes.default.object.isRequired
 });
 
 ContextWrapper.propTypes = {
@@ -176,7 +179,8 @@ ContextWrapper.propTypes = {
   submitting: _propTypes.default.bool,
   valid: _propTypes.default.bool,
   validating: _propTypes.default.bool,
-  listen: _propTypes.default.func
+  listen: _propTypes.default.func,
+  mutators: _propTypes.default.object
 };
 ContextWrapper.defaultProps = {
   'static': false,
@@ -216,7 +220,7 @@ function (_React$Component2) {
         return {};
       },
       initialValues: this.props.initialValues || {},
-      mutators: _objectSpread({}, _finalFormArrays.default),
+      mutators: _objectSpread({}, this.props.mutators, _finalFormArrays.default),
       render: function render(_ref3) {
         var handleSubmit = _ref3.handleSubmit,
             rest = _objectWithoutProperties(_ref3, ["handleSubmit"]);
@@ -244,11 +248,13 @@ FormObj.propTypes = {
   className: _propTypes.default.string,
   shouldComponentUpdate: _propTypes.default.oneOfType([_propTypes.default.func, _propTypes.default.object, _propTypes.default.bool, _propTypes.default.string]),
   listen: _propTypes.default.func,
-  debug: _propTypes.default.bool
+  debug: _propTypes.default.bool,
+  mutators: _propTypes.default.object
 };
 FormObj.defaultProps = {
   debug: false,
-  keepDirtyOnReinitialize: false
+  keepDirtyOnReinitialize: false,
+  mutators: {}
 };
 var _default = FormObj;
 exports.default = _default;

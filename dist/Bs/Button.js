@@ -19,22 +19,40 @@ function _objectWithoutProperties(source, excluded) { if (source == null) return
 
 function _inheritsLoose(subClass, superClass) { subClass.prototype.__proto__ = superClass && superClass.prototype; subClass.__proto__ = superClass; }
 
+function _assertThisInitialized(self) { if (self === void 0) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return self; }
+
 var Button =
 /*#__PURE__*/
 function (_Component) {
-  function Button() {
-    return _Component.apply(this, arguments) || this;
+  function Button(props, context) {
+    var _this;
+
+    _this = _Component.call(this, props, context) || this;
+    _this.onClick = _this.onClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.isDisabled = _this.isDisabled.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    return _this;
   }
 
   var _proto = Button.prototype;
 
+  _proto.onClick = function onClick(event) {
+    this.props.onMutation && this.props.onMutation(this.context.mutators);
+  };
+
+  _proto.isDisabled = function isDisabled() {
+    if (this.props.type !== 'submit') return false;else return (this.context.status.submitting === true || this.context.status.valid === false || this.context.status.pristine === true) && this.context.status.dirtySinceLastSubmit === false;
+  };
+
   _proto.render = function render() {
     var _this$props = this.props,
         children = _this$props.children,
-        rest = _objectWithoutProperties(_this$props, ["children"]);
+        type = _this$props.type,
+        rest = _objectWithoutProperties(_this$props, ["children", "type"]);
 
-    return _react.default.createElement(_reactstrap.Button, _extends({}, rest, {
-      disabled: (this.context.status.submitting === true || this.context.status.valid === false || this.context.status.pristine === true) && this.context.status.dirtySinceLastSubmit === false
+    return _react.default.createElement(_Button.default, _extends({
+      onClick: this.onClick
+    }, rest, {
+      disabled: this.isDisabled()
     }), children, this.props.type === 'submit' && this.context.status.submitting && ' ', this.props.type === 'submit' && this.context.status.submitting && _react.default.createElement("i", {
       className: "fa fa-circle-o-notch fa-spin"
     }));
@@ -47,11 +65,13 @@ function (_Component) {
 
 Button.propTypes = {
   children: _propTypes.default.oneOfType([_propTypes.default.array, _propTypes.default.object, _propTypes.default.string]),
-  type: _propTypes.default.string
+  type: _propTypes.default.string,
+  onMutation: _propTypes.default.func
 };
 Button.defaultProps = {};
 Button.contextTypes = {
-  status: _propTypes.default.object
+  status: _propTypes.default.object,
+  mutators: _propTypes.default.object
 };
 var _default = Button;
 exports.default = _default;

@@ -51,23 +51,23 @@ module.exports = {
       {
         test: /\.jsx?$/,
         loader: 'happypack/loader?id=jsx',
-        include: [path.resolve(__dirname, './src'), path.resolve(__dirname, './example')]
+        //include: [path.resolve(__dirname, '../src'), path.resolve(__dirname, '../example')]
       }, {
         test: /\.json$/,
         loader: 'happypack/loader?id=json',
-        include: [path.resolve(__dirname, '../src'), path.resolve(__dirname, '../example')]
+        //include: [path.resolve(__dirname, '../src'), path.resolve(__dirname, '../example')]
       }, {
         test: /\.less$/,
         loader: 'happypack/loader?id=less',
-        include: [path.resolve(__dirname, '../src'), path.resolve(__dirname, '../example')]
+        //include: [path.resolve(__dirname, '../src'), path.resolve(__dirname, '../example')]
       }, {
         test: /\.scss$/,
         loader: 'happypack/loader?id=sass',
-        include: [path.resolve(__dirname, '../src'), path.resolve(__dirname, '../example')]
+        //include: [path.resolve(__dirname, '../src'), path.resolve(__dirname, '../example')]
       }, {
         test: /\.css$/,
         loader: 'happypack/loader?id=css',
-        include: [path.resolve(__dirname, '../src'), '/node_modules', path.resolve(__dirname, './example')]
+        //include: [path.resolve(__dirname, '../src'), 'node_modules', path.resolve(__dirname, '../example')]
       }, {
         test: /\.woff2?(\?v=\d+\.\d+\.\d+)?$/,
         loader: 'url-loader',

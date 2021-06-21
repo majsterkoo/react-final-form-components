@@ -29,6 +29,7 @@ class Example extends React.Component {
     this.state = {};
     this.values = {};
     this.counter = 1;
+    this.onMutationExample = this.onMutationExample.bind(this);
   }
 
   loadData() {
@@ -39,6 +40,10 @@ class Example extends React.Component {
     this.setState(Object.assign({}, this.values, { name: `raymond.${this.counter}` }), () => {
       this.counter += 1;
     });
+  }
+
+  onMutationExample(mutators){
+    mutators.setSirname();
   }
 
   render() {
@@ -66,6 +71,9 @@ class Example extends React.Component {
       fieldSize: { xs: 12 }
     };
 
+    /*const mutators = React.useMemo(() => (
+    }), [ ]);*/
+
     return (
       <div className="container">
         <h1>FinalForm Components</h1>
@@ -73,7 +81,16 @@ class Example extends React.Component {
           <Form
             debug
             className="form-horizontal"
-            subscription={{ values: true }}
+            mutators={
+              {
+                setSirname: (args, state, utils) => {
+                  utils.changeValue(state, 'sirname', () => {
+                    return Math.random().toString(32).replace(/[^a-z]+/g, '').substr(0, 12);
+                  });
+                },
+              }
+            }
+            subscription={{values: true}}
             validate={(data) => {
               const errors = {};
               if (data.firstname !== 'firstname' && data.firstname !== 'peter') {
@@ -99,14 +116,20 @@ class Example extends React.Component {
                 label="Sirname"
                 name={"sirname"}
                 type={"text"}
+                buttonAfter={() => <Button onMutation={this.onMutationExample} className={"float-right"}>Mutate sirname</Button>}
                 {...size} />
               <Input label="Email" name={"email"} type={"email"} {...size} buttonAfter={() => (
-                <InputDropdown title="Choose" name="choose-3" bu>
+                <Dropdown title="Choose" name="choose-3">
                   <option value="" selected>Choose</option>
                   <option value="0">Something</option>
                   <option value="1">Something else</option>
-                </InputDropdown>
+                </Dropdown>
               )}/>
+              <Input
+                label={"Currency"}
+                name={"currency"}
+                type={"text"}
+              />
               <DateTime label="birthday" name={"birthday"} {...size} conf={{timeFormat: false, unix: true}}/>
               <DateTime label="birthday2" name={"birthday2"} {...size} />
               <Select label="Choose" name="choose-1" {...size}>

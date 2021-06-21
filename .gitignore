@@ -27,9 +27,11 @@ build/Release
 node_modules
 
 # distribution
-# dist
+dist
 
 # IDE
 .idea
 
 yarn-error.log
+
+package-lock.json
