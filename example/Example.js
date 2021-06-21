@@ -118,7 +118,7 @@ class Example extends React.Component {
                 buttonAfter={() => <Button onMutation={this.onMutationExample} className={"float-right"}>Mutate sirname</Button>}
                 {...size} />
               <Input label="Email" name={"email"} type={"email"} {...size} buttonAfter={() => (
-                <Dropdown title="Choose" name="choose-3" bu>
+                <Dropdown title="Choose" name="choose-3">
                   <option value="" selected>Choose</option>
                   <option value="0">Something</option>
                   <option value="1">Something else</option>

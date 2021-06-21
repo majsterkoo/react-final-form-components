@@ -7,17 +7,23 @@ class Button extends Component {
   constructor(props, context) {
     super(props, context);
     this.onClick = this.onClick.bind(this);
+    this.isDisabled = this.isDisabled.bind(this);
   }
 
   onClick(event){
     this.props.onMutation && this.props.onMutation(this.context.mutators);
   }
 
+  isDisabled(){
+    if(this.props.type !== 'submit') return false;
+    else return (this.context.status.submitting === true || this.context.status.valid === false  || this.context.status.pristine === true ) && this.context.status.dirtySinceLastSubmit === false;
+  }
+
   render() {
     const {children, type, ...rest} = this.props;
 
     return (
-      <BSButton onClick={this.onClick} {...rest} disabled={(type==='submit') && (this.context.status.submitting === true || this.context.status.valid === false  || this.context.status.pristine === true ) && this.context.status.dirtySinceLastSubmit === false}>
+      <BSButton onClick={this.onClick} {...rest} disabled={this.isDisabled()}>
         {children}
         {this.props.type === 'submit' && this.context.status.submitting && ' '}
         {this.props.type === 'submit' && this.context.status.submitting && <i className="fa fa-circle-o-notch fa-spin" />}

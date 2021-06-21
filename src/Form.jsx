@@ -33,12 +33,12 @@ class ContextWrapper extends React.Component {
       isStatic: this.props.static,
       debug: this.props.debug,
       status: this.getStatus(),
-      mutators: this.props.mutators,
+      mutators: this.props.form.mutators,
     };
   }
 
   getStatus() {
-    const {dirty, dirtySinceLastSubmit, error, errors, invalid, pristine, submitError, submitErrors, submitFailed, submitSucceeded, submitting, valid, validating} = this.props;
+    const {dirty, dirtySinceLastSubmit, error, errors, invalid, pristine, submitError, submitErrors, submitFailed, submitSucceeded, submitting, valid, validating} = this.props.form.getState();
     return {
       dirty, dirtySinceLastSubmit, error, errors, invalid, pristine, submitError, submitErrors, submitFailed, submitSucceeded, submitting, valid, validating
     };
@@ -133,9 +133,9 @@ class FormObj extends React.Component {
       validate={this.props.validate || (() => ({}))}
       initialValues={this.props.initialValues || {}}
       mutators={{...this.props.mutators, ...arrayMutators}}
-      render={({handleSubmit, mutators, ...rest}) => {
+      render={({handleSubmit, ...rest}) => {
         return (
-          <ContextWrapper {..._omit(this.props, ['onSubmit', 'validate', 'initialValues', 'subscription', 'shouldComponentUpdate'])} {...rest} mutators={mutators}>
+          <ContextWrapper {..._omit(this.props, ['onSubmit', 'validate', 'initialValues', 'subscription', 'shouldComponentUpdate'])} {...rest} >
             <form
               onSubmit={handleSubmit}
               className={this.props.className}>

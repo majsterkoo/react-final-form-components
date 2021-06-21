@@ -1,5 +1,5 @@
 {
-  "name": "react-final-form-components",
+  "name": "reactstrap-final-form-components",
   "version": "1.0.2",
   "description": "React components for react-final-form",
   "main": "dist/index.js",

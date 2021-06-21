@@ -77,7 +77,8 @@ function (_React$Component) {
       checkCondition: this.checkCondition,
       isStatic: this.props.static,
       debug: this.props.debug,
-      status: this.getStatus()
+      status: this.getStatus(),
+      mutators: this.props.mutators
     };
   };
 
@@ -155,7 +156,8 @@ _defineProperty(ContextWrapper, "childContextTypes", {
   checkCondition: _propTypes.default.func.isRequired,
   isStatic: _propTypes.default.bool.isRequired,
   debug: _propTypes.default.bool.isRequired,
-  status: _propTypes.default.object.isRequired
+  status: _propTypes.default.object.isRequired,
+  mutators: _propTypes.default.object.isRequired
 });
 
 ContextWrapper.propTypes = {
@@ -176,7 +178,8 @@ ContextWrapper.propTypes = {
   submitting: _propTypes.default.bool,
   valid: _propTypes.default.bool,
   validating: _propTypes.default.bool,
-  listen: _propTypes.default.func
+  listen: _propTypes.default.func,
+  mutators: _propTypes.default.object
 };
 ContextWrapper.defaultProps = {
   'static': false,
@@ -219,9 +222,12 @@ function (_React$Component2) {
       mutators: _objectSpread({}, this.props.mutators, _finalFormArrays.default),
       render: function render(_ref3) {
         var handleSubmit = _ref3.handleSubmit,
-            rest = _objectWithoutProperties(_ref3, ["handleSubmit"]);
+            mutators = _ref3.mutators,
+            rest = _objectWithoutProperties(_ref3, ["handleSubmit", "mutators"]);
 
-        return _react.default.createElement(ContextWrapper, _extends({}, (0, _omit2.default)(_this3.props, ['onSubmit', 'validate', 'initialValues', 'subscription', 'shouldComponentUpdate']), rest), _react.default.createElement("form", {
+        return _react.default.createElement(ContextWrapper, _extends({}, (0, _omit2.default)(_this3.props, ['onSubmit', 'validate', 'initialValues', 'subscription', 'shouldComponentUpdate']), rest, {
+          mutators: mutators
+        }), _react.default.createElement("form", {
           onSubmit: handleSubmit,
           className: _this3.props.className
         }, _this3.props.children));
