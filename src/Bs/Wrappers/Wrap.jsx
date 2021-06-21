@@ -191,7 +191,7 @@ class Wrap extends React.Component {
             return this.dropdownButton(props, true);
           default: {
             return (
-              <Input>
+              <Input invalid={(touched && error) || (submitFailed && submitError)}>
                 {value()}
               </Input>);
           }
@@ -208,17 +208,20 @@ class Wrap extends React.Component {
             type="textarea"
             {...input}
             {...add}
+            invalid={(touched && error) || (submitFailed && submitError)}
           />;
         case 'select':
           return <Input
             type="select"
             {...input}
             {...add}
+            invalid={(touched && error) || (submitFailed && submitError)}
           >{this.options(props)}</Input>;
         default:
           return (<Input
             {...input}
             {...add}
+            invalid={(touched && error) || (submitFailed && submitError)}
           />);
       }
     };
@@ -293,15 +296,15 @@ class Wrap extends React.Component {
 
     const rendered = (<FormGroup
       {...thisSize()}
-      validationState={validationState()}
     >
 
       {getLabel()}
       <Col {...fieldSize()}>
         {getField()}
-        {((touched && error) || (submitFailed && submitError)) && <FormFeedback />}
+        {/*((touched && error) || (submitFailed && submitError)) && <FormFeedback />*/}
         {props.field.help && (!touched || (!submitError && !error)) && <FormText>{props.field.help}</FormText>}
-        {((touched && error) || (submitFailed && submitError)) && <FormFeedback>{(submitError || error)}</FormFeedback>}
+        {/*((touched && error) || (submitFailed && submitError)) && <FormFeedback>{(submitError || error)}</FormFeedback>*/}
+        {(submitError || error) && <FormFeedback>{(submitError || error)}</FormFeedback>}
       </Col>
     </FormGroup>);
 
