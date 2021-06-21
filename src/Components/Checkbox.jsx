@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import Checkbox from 'react-bootstrap/lib/Checkbox';
 import FormControl from 'react-bootstrap/lib/FormControl';
-import { Col, Row, Alert, Form, Input } from 'reactstrap';
+import {Col, Row, Alert, Form, Input} from 'reactstrap';
 import _isFunction from 'lodash/isFunction';
 import _get from 'lodash/get';
 import _map from 'lodash/map';
@@ -45,10 +45,10 @@ class RadioBinder extends React.Component {
     const list = _isArray(this.props.field.children) ? this.props.field.children : [this.props.field.children];
 
     if (_get(this.props.field, 'static', false) === true) {
-      return _filter(list, { value: this.props.input.value });
+      return _filter(list, {value: this.props.input.value});
     }
 
-    const { value } = this.state;
+    const {value} = this.state;
     const strValue = String(value).toLowerCase();
     if (value !== '') {
       return _filter(list, option => _includes(String(option.children).toLowerCase(), strValue));

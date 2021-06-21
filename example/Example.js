@@ -1,5 +1,5 @@
 import React from 'react';
-import { hot } from 'react-hot-loader'
+import {hot} from 'react-hot-loader'
 import Well from 'react-bootstrap/lib/Well';
 import Row from 'react-bootstrap/lib/Row';
 import Col from 'react-bootstrap/lib/Col';
@@ -36,8 +36,8 @@ class Example extends React.Component {
     if (!this.values.complex) {
       this.values.complex = [];
     }
-    this.values.complex.push({ name1: this.counter });
-    this.setState(Object.assign({}, this.values, { name: `raymond.${this.counter}` }), () => {
+    this.values.complex.push({name1: this.counter});
+    this.setState(Object.assign({}, this.values, {name: `raymond.${this.counter}`}), () => {
       this.counter += 1;
     });
   }
@@ -54,7 +54,7 @@ class Example extends React.Component {
 
       return new Promise((resolve) => {
         if (values.firstname !== 'peter') {
-          resolve({ firstname: 'Nope! must contain peter' });
+          resolve({firstname: 'Nope! must contain peter'});
         } else {
           window.alert(JSON.stringify(values, 0, 2));
           resolve();
@@ -63,12 +63,12 @@ class Example extends React.Component {
     };
 
     const size = {
-      labelSize: { xs: 3 },
-      fieldSize: { xs: 9 }
+      labelSize: {xs: 3},
+      fieldSize: {xs: 9}
     };
 
     const sizeComplex = {
-      fieldSize: { xs: 12 }
+      fieldSize: {xs: 12}
     };
 
     /*const mutators = React.useMemo(() => (
@@ -105,7 +105,7 @@ class Example extends React.Component {
               'choose-3': '1',
               'resource2': 2,
               'plupload': [
-                { file_original_name: 'test' }
+                {file_original_name: 'test'}
               ]
             }}
           >
@@ -116,7 +116,7 @@ class Example extends React.Component {
                 label="Sirname"
                 name={"sirname"}
                 type={"text"}
-                buttonAfter={() => <Button onMutation={this.onMutationExample} className={"float-right"}>Mutate sirname</Button>}
+                buttonAfter={() => <Button onMutation={this.onMutationExample} className={"float-right"} type={"button"} >Mutate sirname</Button>}
                 {...size} />
               <Input label="Email" name={"email"} type={"email"} {...size} buttonAfter={() => (
                 <Dropdown title="Choose" name="choose-3">
@@ -203,7 +203,7 @@ class Example extends React.Component {
             </Well>
             <Message type="success">Message after success</Message>
             <Message type="error">Oopsie!</Message>
-            <Button type="submit">send</Button>
+            <Button type="submit" color={"success"}>send</Button>
           </Form>
         </div>
       </div>

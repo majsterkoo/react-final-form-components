@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 //import BSButton from 'react-bootstrap/lib/Button';
-import { Button as BSButton } from 'reactstrap';
+import {Button as BSButton} from 'reactstrap';
 import PropTypes from 'prop-types';
 
 class Button extends Component {
@@ -12,7 +12,11 @@ class Button extends Component {
   }
 
   onClick(event){
+    //when using onMutation we want prevent default (submiting form)
+    this.props.onMutation && event.preventDefault();
     this.props.onMutation && this.props.onMutation(this.context.mutators);
+    //calling onClick event if defined by user
+    this.props.onClick && this.props.onClick(event);
   }
 
   isDisabled(){
@@ -24,10 +28,10 @@ class Button extends Component {
     const {children, type, ...rest} = this.props;
 
     return (
-      <BSButton onClick={this.onClick} {...rest} disabled={this.isDisabled()}>
+      <BSButton disabled={this.isDisabled()} type={type} {...rest} onClick={this.onClick}>
         {children}
-        {this.props.type === 'submit' && this.context.status.submitting && ' '}
-        {this.props.type === 'submit' && this.context.status.submitting && <i className="fa fa-circle-o-notch fa-spin" />}
+        {type === 'submit' && this.context.status.submitting && ' '}
+        {type === 'submit' && this.context.status.submitting && <i className="fa fa-circle-o-notch fa-spin" />}
       </BSButton>
     );
   }

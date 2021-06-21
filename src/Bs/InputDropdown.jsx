@@ -5,4 +5,4 @@ import decorator from '../utils/decorator';
 /**
  * Dropdown item used as InputGroupButton
  */
-export default decorator({ type: 'input-dropdown' })(Wrap);
+export default decorator({type: 'input-dropdown'})(Wrap);

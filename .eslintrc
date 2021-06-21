@@ -32,7 +32,7 @@
     "no-console": 0,
     "no-alert": 0,
     "id-length": [2, {"min": 1, "properties": "never"}],
-    "object-curly-spacing": ["error", "always"],
+    "object-curly-spacing": ["error", "never"],
     "prefer-template": 0,
     "max-len": ["error", 300, 2, {"ignoreUrls": true}],
     "react/prefer-stateless-function": 0,

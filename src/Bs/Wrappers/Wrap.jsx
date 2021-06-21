@@ -25,7 +25,7 @@ import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import HelpBlock from 'react-bootstrap/lib/HelpBlock';
 import MenuItem from 'react-bootstrap/lib/MenuItem';
 import DropdownButton from 'react-bootstrap/lib/DropdownButton';
-import { Field } from 'react-final-form';
+import {Field} from 'react-final-form';
 
 class Wrap extends React.Component {
 
@@ -67,16 +67,16 @@ class Wrap extends React.Component {
       }
 
     });
-    return { dropDownTitle, menuItem };
+    return {dropDownTitle, menuItem};
   }
 
 
   dropdownButton(props, isStatic, inputItem) {
-    const { dropDownTitle, menuItem } = this.dropDown(props);
+    const {dropDownTitle, menuItem} = this.dropDown(props);
     const size = _get(props.field, 'bsSize', this.props.size);
     const thisSize = () => {
       if (size !== 'medium') {
-        return ({ size: size });
+        return ({size: size});
       }
     };
 
@@ -117,7 +117,7 @@ class Wrap extends React.Component {
   }
 
   renderField(props) {
-    const { input, help, meta: { touched, error, submitError, submitFailed, valid }, ...custom } = props;
+    const {input, help, meta: {touched, error, submitError, submitFailed, valid}, ...custom} = props;
     this.input = input;
     const size = _get(props.field, 'bsSize', this.props.size);
     if (props.field && props.field.hidden && _isFunction(props.field.hidden)) {
@@ -132,7 +132,7 @@ class Wrap extends React.Component {
 
     const thisSize = () => {
       if (size !== 'medium') {
-        return ({ size: size });
+        return ({size: size});
       }
     };
 
@@ -179,7 +179,7 @@ class Wrap extends React.Component {
       if (this.context.isStatic === true || _get(props.field, 'static', false) === true) {
         const value = () => {
           if (props.field.type === 'select') {
-            return _map(_filter(props.field.options, { value: this.input.value }), (item, key) => {
+            return _map(_filter(props.field.options, {value: this.input.value}), (item, key) => {
               return (<span key={key}>{item.desc}</span>);
             });
           }
@@ -307,7 +307,7 @@ class Wrap extends React.Component {
 
     if(this.context.debug) {
       return (
-        <div style={{ position: 'relative' }}>
+        <div style={{position: 'relative'}}>
           {rendered}
         </div>
       );
@@ -317,7 +317,7 @@ class Wrap extends React.Component {
   }
 
   render() {
-    const { name, ...rest } = this.props;
+    const {name, ...rest} = this.props;
     return (
       <Field
         component={this.renderField}

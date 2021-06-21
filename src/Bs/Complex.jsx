@@ -2,9 +2,9 @@ import PropTypes from 'prop-types';
 import _get from 'lodash/get';
 import _has from 'lodash/has';
 import React from 'react';
-import { FieldArray } from 'react-final-form-arrays';
+import {FieldArray} from 'react-final-form-arrays';
 import Panel from 'react-bootstrap/lib/Panel';
-import { Button, Row, Col, ButtonGroup } from 'reactstrap';
+import {Button, Row, Col, ButtonGroup} from 'reactstrap';
 import ControlLabel from 'react-bootstrap/lib/ControlLabel';
 import _isFunction from 'lodash/isFunction';
 
@@ -80,7 +80,7 @@ class Complex extends React.Component {
       return returnButtons;
     };
 
-    const { header, footer } = _get(this.props, 'panel', {});
+    const {header, footer} = _get(this.props, 'panel', {});
     const headerDiv = (<div className="clearfix">
       <ButtonGroup>
         {buttons()}
@@ -124,7 +124,7 @@ class Complex extends React.Component {
   }
 
   renderComplex(props) {
-    const { fields, meta: { touched, error } }  = props;
+    const {fields, meta: {touched, error}}  = props;
     const staticField = props.static;
 
     this.push = props.fields.push;
@@ -132,7 +132,7 @@ class Complex extends React.Component {
 
     const thisSize = () => {
       if (this.props.size !== 'medium') {
-        return ({ size: this.props.size });
+        return ({size: this.props.size});
       }
     };
 
@@ -155,7 +155,7 @@ class Complex extends React.Component {
       } else if (this.state.collapsed === false) {
         state = true;
       }
-      this.setState({ 'collapsed': state }, () => {
+      this.setState({'collapsed': state}, () => {
         // this.props.formChange('itemsx', state);
       });
     };
@@ -182,7 +182,7 @@ class Complex extends React.Component {
       if (_get(this.props, 'multiple', true) === true || fields.length === 0) {
         const bsStyle = () => {
           if (_get(this.props.addBtn, 'bsStyle') && _get(this.props.addBtn, 'bsStyle') !== 'default') {
-            return ({ color: _get(this.props.addBtn, 'bsStyle') });
+            return ({color: _get(this.props.addBtn, 'bsStyle')});
           }
         };
         return (
