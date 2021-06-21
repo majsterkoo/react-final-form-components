@@ -29,6 +29,7 @@ function (_Component) {
 
     _this = _Component.call(this, props, context) || this;
     _this.onClick = _this.onClick.bind(_assertThisInitialized(_assertThisInitialized(_this)));
+    _this.isDisabled = _this.isDisabled.bind(_assertThisInitialized(_assertThisInitialized(_this)));
     return _this;
   }
 
@@ -36,6 +37,10 @@ function (_Component) {
 
   _proto.onClick = function onClick(event) {
     this.props.onMutation && this.props.onMutation(this.context.mutators);
+  };
+
+  _proto.isDisabled = function isDisabled() {
+    if (this.props.type !== 'submit') return false;else return (this.context.status.submitting === true || this.context.status.valid === false || this.context.status.pristine === true) && this.context.status.dirtySinceLastSubmit === false;
   };
 
   _proto.render = function render() {
@@ -47,7 +52,7 @@ function (_Component) {
     return _react.default.createElement(_Button.default, _extends({
       onClick: this.onClick
     }, rest, {
-      disabled: type === 'submit' && (this.context.status.submitting === true || this.context.status.valid === false || this.context.status.pristine === true) && this.context.status.dirtySinceLastSubmit === false
+      disabled: this.isDisabled()
     }), children, this.props.type === 'submit' && this.context.status.submitting && ' ', this.props.type === 'submit' && this.context.status.submitting && _react.default.createElement("i", {
       className: "fa fa-circle-o-notch fa-spin"
     }));
