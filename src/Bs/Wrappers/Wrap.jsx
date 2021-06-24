@@ -117,6 +117,7 @@ class Wrap extends React.Component {
   }
 
   renderField(props) {
+    console.log(props);
     const {input, help, meta: {touched, error, submitError, submitFailed, valid}, ...custom} = props;
     this.input = input;
     const size = _get(props.field, 'bsSize', this.props.size);
@@ -147,6 +148,8 @@ class Wrap extends React.Component {
         return props.field.fieldSize;
       }
     };
+
+    const invalid = !!((touched && error) || (submitFailed && submitError) || (props.field.immediatelyError && error));
 
     const add = _pick(custom, ['type', 'placeholder', 'rows', 'cols', 'color']);
     if (add.type === 'select') {
@@ -191,7 +194,7 @@ class Wrap extends React.Component {
             return this.dropdownButton(props, true);
           default: {
             return (
-              <Input invalid={(touched && error) || (submitFailed && submitError)}>
+              <Input invalid={invalid}>
                 {value()}
               </Input>);
           }
@@ -208,26 +211,26 @@ class Wrap extends React.Component {
             type="textarea"
             {...input}
             {...add}
-            invalid={(touched && error) || (submitFailed && submitError)}
+            invalid={invalid}
           />;
         case 'select':
           return <Input
             type="select"
             {...input}
             {...add}
-            invalid={(touched && error) || (submitFailed && submitError)}
+            invalid={invalid}
           >{this.options(props)}</Input>;
         default:
           return (<Input
             {...input}
             {...add}
-            invalid={(touched && error) || (submitFailed && submitError)}
+            invalid={invalid}
           />);
       }
     };
 
     const validationState = () => {
-      if ((touched && error) || (submitFailed && submitError)) {
+      if (invalid) {
         return 'error';
       }
 
@@ -339,6 +342,8 @@ Wrap.propTypes = {
   'static': PropTypes.bool,
   'name': PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
+  //show error message (if is set) before input is touched
+  immediatelyError: PropTypes.bool,
   component: PropTypes.func,
   children: PropTypes.oneOfType([PropTypes.object, PropTypes.array, PropTypes.bool])
 };
@@ -347,6 +352,8 @@ Wrap.contextTypes = {
   checkCondition: PropTypes.func.isRequired,
   isStatic: PropTypes.bool.isRequired
 };
-Wrap.defaultProps = {};
+Wrap.defaultProps = {
+  immediatelyError: false,
+};
 
 export default Wrap;
