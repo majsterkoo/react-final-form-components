@@ -52,7 +52,7 @@ const App = () => (
     <Well>
       <Form className="form-horizontal" validate={validate}>
         <Input label="Username" name={"username"} type={"text"} {...size} />
-        <Input label="Pasword" name={"password"} type={"password"} {...size} />
+        <Input immediatelyError label="Pasword" name={"password"} type={"password"} {...size} />
         <Message type="success">Message after success</Message>
         <Message type="error">Oopsie!</Message>
         <button type="submit">send</button>
@@ -65,6 +65,12 @@ const App = () => (
 render(<App />, document.getElementById("root"));
 
 ````
+## props
+| Name | Field | Desc | Default | Type |
+| ---- | ----- | ---- | ------- | ---- |
+| immediatelyError | Input | Show error message (if is set) before input field is touched | false | bool |
+| autocomplete | Input | HTML autocomplete attribute (https://developer.mozilla.org/en-US/docs/Web/HTML/Attributes/autocomplete) | undefined | string |
+
 [Try online](https://codesandbox.io/s/r4q7y39pkn)
 
 ## More examples

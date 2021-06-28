@@ -151,7 +151,7 @@ class Wrap extends React.Component {
 
     const invalid = !!((touched && error) || (submitFailed && submitError) || (props.field.immediatelyError && error));
 
-    const add = _pick(custom, ['type', 'placeholder', 'rows', 'cols', 'color']);
+    const add = _pick(custom, ['type', 'placeholder', 'rows', 'cols', 'color', 'autocomplete']);
     if (add.type === 'select') {
       add.componentClass = 'select';
     }
@@ -170,6 +170,9 @@ class Wrap extends React.Component {
     }
     if (props.field.color) {
       add.color = props.field.color;
+    }
+    if (props.field.autocomplete) {
+      add.autocomplete = props.field.autocomplete;
     }
 
     const component = () => {
@@ -342,6 +345,7 @@ Wrap.propTypes = {
   'static': PropTypes.bool,
   'name': PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
+  autocomplete: PropTypes.string,
   //show error message (if is set) before input is touched
   immediatelyError: PropTypes.bool,
   component: PropTypes.func,

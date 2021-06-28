@@ -11,7 +11,7 @@ class Button extends Component {
     this.isDisabled = this.isDisabled.bind(this);
   }
 
-  onClick(event){
+  async onClick(event){
     //when using onMutation we want prevent default (submiting form)
     this.props.onMutation && event.preventDefault();
     this.props.onMutation && this.props.onMutation(this.context.mutators);

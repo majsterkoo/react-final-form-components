@@ -43,7 +43,7 @@ class Example extends React.Component {
   }
 
   onMutationExample(mutators){
-    mutators.setSirname();
+    mutators.setSurname();
   }
 
   render() {
@@ -83,8 +83,8 @@ class Example extends React.Component {
             className="form-horizontal"
             mutators={
               {
-                setSirname: (args, state, utils) => {
-                  utils.changeValue(state, 'sirname', () => {
+                setSurname: (args, state, utils) => {
+                  utils.changeValue(state, 'surname', () => {
                     return Math.random().toString(32).replace(/[^a-z]+/g, '').substr(0, 12);
                   });
                 },
@@ -96,6 +96,7 @@ class Example extends React.Component {
               if (data.firstname !== 'firstname' && data.firstname !== 'peter') {
                 errors.firstname = 'Firstname must contain "firstname"';
               }
+              if((data.surname||'').length === 0) errors.surname = 'Surname cannot be empty';
               return errors;
             }}
             onSubmit={onSubmit}
@@ -113,10 +114,12 @@ class Example extends React.Component {
               <Plupload name={'plupload'}/>
               <Input label="Firstname" name={"firstname"} type={"text"} {...size} />
               <Input
-                label="Sirname"
-                name={"sirname"}
+                label="Surname"
+                name={"surname"}
+                autocomplete={"family-name"}
                 type={"text"}
-                buttonAfter={() => <Button onMutation={this.onMutationExample} className={"float-right"} type={"button"} >Mutate sirname</Button>}
+                immediatelyError={true}
+                buttonAfter={() => <Button onMutation={this.onMutationExample} className={"float-right"} type={"button"} >Mutate surname</Button>}
                 {...size} />
               <Input label="Email" name={"email"} type={"email"} {...size} buttonAfter={() => (
                 <Dropdown title="Choose" name="choose-3">
