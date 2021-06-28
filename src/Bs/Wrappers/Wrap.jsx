@@ -119,6 +119,7 @@ class Wrap extends React.Component {
   renderField(props) {
     console.log(props);
     const {input, help, meta: {touched, error, submitError, submitFailed, valid}, ...custom} = props;
+
     this.input = input;
     const size = _get(props.field, 'bsSize', this.props.size);
     if (props.field && props.field.hidden && _isFunction(props.field.hidden)) {
@@ -152,9 +153,22 @@ class Wrap extends React.Component {
     const invalid = !!((touched && error) || (submitFailed && submitError) || (props.field.immediatelyError && error));
 
     const add = _pick(custom, ['type', 'placeholder', 'rows', 'cols', 'color', 'autocomplete']);
+
     if (add.type === 'select') {
       add.componentClass = 'select';
     }
+    else if (add.type === 'number') {
+      if (props.field.min) {
+        add.min = props.field.min;
+      }
+      if (props.field.max) {
+        add.max = props.field.max;
+      }
+      if (props.field.step) {
+        add.step = props.field.step;
+      }
+    }
+
     if (custom.field.disabled && _isFunction(custom.field.disabled)) {
       add.disabled = this.context.checkCondition(custom.field.disabled, _get(props, 'parent'));
     }

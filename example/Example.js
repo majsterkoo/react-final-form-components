@@ -121,6 +121,9 @@ class Example extends React.Component {
                 immediatelyError={true}
                 buttonAfter={() => <Button onMutation={this.onMutationExample} className={"float-right"} type={"button"} >Mutate surname</Button>}
                 {...size} />
+                
+              <Input name={"age"} type={"number"} min={"0"} max={"150"} step={"2"} />
+                
               <Input label="Email" name={"email"} type={"email"} {...size} buttonAfter={() => (
                 <Dropdown title="Choose" name="choose-3">
                   <option value="" selected>Choose</option>
