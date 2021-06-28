@@ -256,6 +256,8 @@ class Wrap extends React.Component {
       }
     };
 
+    const addonElement = element => (typeof element === 'function') ? element(props.field, props.meta) : element;
+
     const buttonBefore = () => {
       if (_has(props.field, 'buttonBefore')) {
         return (<InputGroupAddon addonType={"prepend"}><Button>{props.field.buttonBefore()}</Button></InputGroupAddon>);
@@ -270,13 +272,13 @@ class Wrap extends React.Component {
 
     const addonBefore = () => {
       if (_has(props.field, 'addonBefore')) {
-        return (<InputGroupAddon addonType={"prepend"}>{_get(props.field, 'addonBefore')}</InputGroupAddon>);
+        return (<InputGroupAddon addonType={"prepend"}>{addonElement(_get(props.field, 'addonBefore'))}</InputGroupAddon>);
       }
     };
 
     const addonAfter = () => {
       if (_has(props.field, 'addonAfter')) {
-        return (<InputGroupAddon addonType={"append"}>{_get(props.field, 'addonAfter')}</InputGroupAddon>);
+        return (<InputGroupAddon addonType={"append"}>{addonElement(_get(props.field, 'addonAfter'))}</InputGroupAddon>);
       }
     };
 

@@ -96,6 +96,9 @@ class Example extends React.Component {
               if (data.firstname !== 'firstname' && data.firstname !== 'peter') {
                 errors.firstname = 'Firstname must contain "firstname"';
               }
+              if(data.age > 18){
+                errors.age = 'Not children';
+              }
               if((data.surname||'').length === 0) errors.surname = 'Surname cannot be empty';
               return errors;
             }}
@@ -122,7 +125,7 @@ class Example extends React.Component {
                 buttonAfter={() => <Button onMutation={this.onMutationExample} className={"float-right"} type={"button"} >Mutate surname</Button>}
                 {...size} />
                 
-              <Input name={"age"} type={"number"} min={"0"} max={"150"} step={"2"} />
+              <Input name={"age"} type={"number"} min={"0"} max={"150"} step={"2"} label={"Age"} addonAfter={(field, meta) => <Button disabled={meta.invalid}>child button</Button>} />
                 
               <Input label="Email" name={"email"} type={"email"} {...size} buttonAfter={() => (
                 <Dropdown title="Choose" name="choose-3">
