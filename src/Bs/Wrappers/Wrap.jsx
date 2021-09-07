@@ -237,6 +237,14 @@ class Wrap extends React.Component {
             {...add}
             invalid={invalid}
           >{this.options(props)}</Input>;
+        case 'date':
+        case 'time':
+          return <Input
+            type={props.field.type}  
+            {...input}
+            {...add}
+            invalid={invalid}
+          />;
         default:
           return (<Input
             {...input}

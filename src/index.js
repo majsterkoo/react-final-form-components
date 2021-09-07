@@ -14,5 +14,7 @@ export Resource from './Bs/Resource';
 export Select from './Bs/Select';
 export Show from './Bs/Show';
 export TinyMce from './Bs/TinyMce';
+export Date from './Bs/Date';
+export Time from './Bs/Time';
 
 export default Form;

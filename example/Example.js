@@ -17,6 +17,8 @@ import Dropdown from '../src/Bs/Dropdown';
 import Plupload from '../src/Bs/Plupload';
 import Resource from '../src/Bs/Resource';
 import TestResource from './TestResource'
+import Date from '../src/Bs/Date';
+import Time from '../src/Bs/Time';
 import InputDropdown from "../src/Bs/InputDropdown";
 
 require('./utils/moment');
@@ -141,6 +143,8 @@ class Example extends React.Component {
               />
               <DateTime label="birthday" name={"birthday"} {...size} conf={{timeFormat: false, unix: true}}/>
               <DateTime label="birthday2" name={"birthday2"} {...size} />
+              <Date label="Date" name="date" />
+              <Time label="Time" name="time" />
               <Select label="Choose" name="choose-1" {...size}>
                 <option value="0">Something</option>
                 <option value="1">Something else</option>

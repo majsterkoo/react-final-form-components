@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import _isFunction from 'lodash/isFunction';
 import _omitBy from 'lodash/omitBy';
 import _pickBy from 'lodash/pickBy';
-import ReactDateTime from 'react-datetime';
 import moment from 'moment';
+import ReactDateTime from 'react-datetime'
 
 class ContextBinder extends React.Component {
 
